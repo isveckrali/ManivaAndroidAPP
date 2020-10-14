@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_gravity="center"
+android:foregroundGravity="center"
+app:layout_anchorGravity="center"
+tools:context=".ui.register.RegisterFragment">
+
+<ImageView
+    android:id="@+id/register_background_iV"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:srcCompat="@drawable/background" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:foregroundGravity="center"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/frame">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/card"
+                            android:layout_gravity="center"
+                            android:layout_width="@dimen/login_register_card_width"
+                            android:layout_height="match_parent"
+                            android:alpha="0.8"
+                            app:cardBackgroundColor="@color/cardview_light_background"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical"
+                                    android:padding="@dimen/activity_vertical_margin">
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="100dp"
+                                        android:layout_gravity="center_horizontal"
+                                        android:src="@mipmap/ic_launcher_round" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:text="@string/register"
+                                        android:textColor="@color/colorAccent"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold" />
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/register_name_tIL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/register_name_tIET"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="@string/name"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textPersonName"
+                                            android:textAllCaps="true" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/register_mail_tIL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        >
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/register_mail_tIET"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="@string/mail"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textEmailAddress" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/register_username_tIL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        >
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/register_username_tIET"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="@string/username"
+                                            android:imeOptions="actionNext"
+                                            android:inputType="textPersonName" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <com.google.android.material.textfield.TextInputLayout
+                                        android:id="@+id/register_pass_TIL"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        >
+
+                                        <com.google.android.material.textfield.TextInputEditText
+                                            android:id="@+id/register_pass_tIET"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:gravity="center"
+                                            android:hint="@string/password"
+                                            android:imeOptions="actionDone"
+                                            android:inputType="textPassword" />
+                                    </com.google.android.material.textfield.TextInputLayout>
+
+                                    <CheckBox
+                                        android:id="@+id/register_remember_me_cB"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/remember_me" />
+                                </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </FrameLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_fab"
+            android:layout_marginTop="-28dp"
+            android:layout_gravity="bottom|center_horizontal"
+            app:srcCompat="@drawable/ic_baseline_check_24" />
+
+                </LinearLayout>
+            </ScrollView>
+</FrameLayout>

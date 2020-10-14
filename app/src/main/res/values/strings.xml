@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Maniva Digital</string>
+    <string name="title_home">Home</string>
+    <string name="title_about_us">About Us</string>
+    <string name="title_book_online">Book Online</string>
+    <string name="title_portfolio">Porfolio</string>
+    <string name="welcome_page_title">Book a Consultation Session</string>
+    <string name="welcome_page_content">WELCOME TO MANIVA DIGITAL \n
+Mobile App  And Website Development   |   IT-Consultation   |   Data Analysis</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="name">Name</string>
+    <string name="mail">Mail</string>
+    <string name="remember_me">Remeber me</string>
+    <string name="forget_password">Forget password</string>
+    <string name="having_account">I adready have a acoount</string>
+
+    <string name="check_internet_collection"> Please check your internet connection </string>
+</resources>
