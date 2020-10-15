@@ -20,5 +20,9 @@ Mobile App  And Website Development   |   IT-Consultation   |   Data Analysis</s
     <string name="forget_password">Forget password</string>
     <string name="having_account">I adready have a acoount</string>
 
-    <string name="check_internet_collection"> Please check your internet connection </string>
+    <string name="check_internet_connection"> Please check your internet connection </string>
+
+    <string name="not_mail">Please text a correct mail</string>
+    <string name="empty_field">Field can not be empty</string>
+    <string name="exist_username">This username is taken</string>
 </resources>

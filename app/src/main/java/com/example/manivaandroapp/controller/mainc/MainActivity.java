@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.example.manivaandroapp.R;
 import com.example.manivaandroapp.ui.login.LoginFragment;
