@@ -1,4 +1,4 @@
-package com.example.manivaandroapp.controller.models;
+package com.example.manivaandroapp.models;
 
 public class UserInfo {
     String mail, pass, name , username, uID;
