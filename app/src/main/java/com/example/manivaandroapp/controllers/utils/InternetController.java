@@ -1,4 +1,4 @@
-package com.example.manivaandroapp.controller.utils;
+package com.example.manivaandroapp.controllers.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

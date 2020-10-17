@@ -1,14 +1,16 @@
 package com.example.manivaandroapp.models;
 
-public class UserInfo {
-    String mail, pass, name , username, uID;
+public class UserInfoModel {
+    String mail, pass, name , username;
 
-    public UserInfo(String mail, String pass, String name, String username, String uID) {
+    public UserInfoModel() {
+    }
+
+    public UserInfoModel(String mail, String pass, String name, String username) {
         this.mail = mail;
         this.pass = pass;
         this.name = name;
         this.username = username;
-        this.uID = uID;
     }
 
     public String getMail() {
@@ -41,13 +43,5 @@ public class UserInfo {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getuID() {
-        return uID;
-    }
-
-    public void setuID(String uID) {
-        this.uID = uID;
     }
 }

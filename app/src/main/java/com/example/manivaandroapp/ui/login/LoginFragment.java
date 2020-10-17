@@ -1,8 +1,8 @@
 package com.example.manivaandroapp.ui.login;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 
@@ -24,10 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.manivaandroapp.R;
-import com.example.manivaandroapp.controller.mainc.MainActivity;
-import com.example.manivaandroapp.controller.utils.Helper;
-import com.example.manivaandroapp.controller.utils.InternetController;
-import com.example.manivaandroapp.ui.home.HomeFragment;
+import com.example.manivaandroapp.controllers.mainc.MainActivity;
+import com.example.manivaandroapp.controllers.utils.Helper;
+import com.example.manivaandroapp.controllers.utils.InternetController;
 import com.example.manivaandroapp.ui.register.RegisterFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -63,7 +62,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         view =  inflater.inflate(R.layout.fragment_login, container, false);
         context = inflater.getContext();
         init();
-        backAnimationManagement(iVBackground);
+        //backAnimationManagement(iVBackground);
         return view;
     }
 
@@ -143,25 +142,22 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     //Login with firebase
     private void login(String mail, String pass){
-        Toast.makeText(context, "Gerçekleşti1", Toast.LENGTH_SHORT).show();
 
         firebaseAuth.signInWithEmailAndPassword(mail, pass).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(context, "Gerçekleşti", Toast.LENGTH_SHORT).show();
                 fabLogin.setClickable(true);
+                startActivity(new Intent(getActivity(),MainActivity.class));
+                getActivity().finish();
                 if (cBRememberMe.isChecked()) {
-
+                //Save info to DB
                 }
-                ((MainActivity)getActivity()).launcMainPage();
-                ((MainActivity)getActivity()).loadFragment(new HomeFragment());
 
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 fabLogin.setClickable(true);
-                Toast.makeText(context, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -173,13 +169,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 checkInternetAndGetData();
                 break;
             case R.id.login_register_b:
-                ((MainActivity) getActivity()).loadFragment(new RegisterFragment());
+                Helper.loadFragment(new RegisterFragment(), context, R.id.log_reg_container_fL);
                 break;
             case R.id.login_forget_pass_tV:
                 break;
             default:
                 break;
         }
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        Helper.removeFragment(new LoginFragment(),context);
     }
 }

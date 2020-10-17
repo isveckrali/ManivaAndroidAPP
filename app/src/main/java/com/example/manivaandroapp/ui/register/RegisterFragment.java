@@ -2,13 +2,13 @@ package com.example.manivaandroapp.ui.register;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.manivaandroapp.R;
-import com.example.manivaandroapp.controller.mainc.MainActivity;
-import com.example.manivaandroapp.models.UserInfo;
-import com.example.manivaandroapp.controller.utils.Child;
-import com.example.manivaandroapp.controller.utils.Helper;
-import com.example.manivaandroapp.controller.utils.InternetController;
+import com.example.manivaandroapp.controllers.mainc.MainActivity;
+import com.example.manivaandroapp.models.UserInfoModel;
+import com.example.manivaandroapp.controllers.utils.Child;
+import com.example.manivaandroapp.controllers.utils.Helper;
+import com.example.manivaandroapp.controllers.utils.InternetController;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -73,13 +72,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     private void init(){
         backgrounIV = view.findViewById(R.id.register_background_iV);
+
         txtIETName = view.findViewById(R.id.register_name_tIET);
         txtIETMail = view.findViewById(R.id.register_mail_tIET);
         txtIETUsername = view.findViewById(R.id.register_username_tIET);
         txtIETPass = view.findViewById(R.id.register_pass_tIET);
 
         tILName = view.findViewById(R.id.register_name_tIL);
-        tILMail = view.findViewById(R.id.register_name_tIL);
+        tILMail = view.findViewById(R.id.register_mail_tIL);
         tILUsername = view.findViewById(R.id.register_username_tIL);
         tILPass = view.findViewById(R.id.register_pass_tIL);
 
@@ -129,59 +129,42 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     private void checkUsername(final String email, final String pass, final String username, final String name){
         Query query = databaseReference.child(Child.USERS).orderByChild("username").equalTo(username);
-        Log.i("Girdi ", " 1");
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.i("Girdi ", " 2");
                 if (snapshot.getChildrenCount() > 0) {
                     tILUsername.setError(getResources().getText(R.string.exist_username));
                     progressBar.setClickable(true);
                     fabRegister.setVisibility(View.GONE);
-                    Log.i("Girdi ", " 3");
                     // 1 or more users exist which have the username property "usernameToCheckIfExists"
                 }  else {
                     registerUser(email,pass,username, name);
-                    Log.i("Girdi ", " 4");
                 }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.i("Girdi ", " 5");
             }
 
         });
     }
 
-
     private void registerUser(final String email, final String pass, final String username, final String name){
-        Log.i("Girdi ", " 6");
         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i("Girdi ", " 7");
                 if (task.isSuccessful()) {
-                    Log.i("Girdi ", " 8");
-                    databaseReference.child(Child.USERS).push().setValue(new UserInfo(email,pass,name,username,  firebaseAuth.getUid()));
+                    databaseReference.child(Child.USERS).child(firebaseAuth.getUid()).setValue(new UserInfoModel(email,pass,name,username));
                     fabRegister.setClickable(true);
                     progressBar.setVisibility(View.GONE);
-                    ((MainActivity) getActivity()).launcMainPage();
+                    startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
                 } else {
-                    Log.i("Girdi ", " 9 " + task.getException().getMessage());
                     Toast.makeText(context, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     fabRegister.setClickable(true);
                     progressBar.setVisibility(View.GONE);
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.i("Girdi ", " 10 " + e.getMessage() + " " + e.getLocalizedMessage());
-                fabRegister.setClickable(true);
-                progressBar.setVisibility(View.GONE);
-            }
         });
-
 
     }
 

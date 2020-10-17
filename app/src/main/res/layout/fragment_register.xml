@@ -13,7 +13,7 @@ tools:context=".ui.register.RegisterFragment">
     android:id="@+id/register_background_iV"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:srcCompat="@drawable/background" />
+    android:src="@drawable/card_gradient" />
 
 <ScrollView
     android:layout_width="match_parent"
