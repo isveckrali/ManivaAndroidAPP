@@ -2,11 +2,9 @@ package com.example.manivaandroapp.ui.adapters;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +13,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.manivaandroapp.R;
+import com.example.manivaandroapp.controllers.utils.FragmentHelper;
 import com.example.manivaandroapp.controllers.utils.Helper;
 import com.example.manivaandroapp.controllers.utils.InternetController;
 import com.example.manivaandroapp.ui.home.HomeViewModel;
-import com.example.manivaandroapp.ui.homeDetails.HomeDetailFragment;
-import com.google.rpc.Help;
+import com.example.manivaandroapp.ui.homeDetail.HomeDetailFragment;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
 
 public class HomeFragAdapter extends RecyclerView.Adapter<HomeFragAdapter.PostViewHolder>{
 
+    //Properties
     private ArrayList<String> titles, images, descriptions;
     private Context context;
 
@@ -52,7 +51,7 @@ public class HomeFragAdapter extends RecyclerView.Adapter<HomeFragAdapter.PostVi
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
         HomeViewModel homeViewModel = new HomeViewModel(images.get(position), titles.get(position), descriptions.get(position));
-        holder.setCategory(homeViewModel.getImageUrl(),homeViewModel.getTitle(),homeViewModel.getSortDescription(), position);
+        holder.setCategory(homeViewModel.getImageUrl(),homeViewModel.getTitle(),homeViewModel.getSortDescription());
     }
 
     @Override
@@ -73,7 +72,8 @@ public class HomeFragAdapter extends RecyclerView.Adapter<HomeFragAdapter.PostVi
             titleTV = itemView.findViewById(R.id.item_home_title_tV);
         }
 
-        public void setCategory(final String imagesUrl, final String title, final String description, final int position){
+        //Set outputs to components
+        public void setCategory(final String imagesUrl, final String title, final String description){
             Glide.with(context).load(imagesUrl).into(imageView);
             titleTV.setText(title);
             descriptionTV.setText(description);
@@ -88,11 +88,11 @@ public class HomeFragAdapter extends RecyclerView.Adapter<HomeFragAdapter.PostVi
 
             HomeDetailFragment homeDetailFragment = new HomeDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putString("images_url",images.get(getAdapterPosition()));
-            bundle.putString("title",titles.get(getAdapterPosition()));
-            bundle.putString("description",descriptions.get(getAdapterPosition()));
+            bundle.putString(HomeDetailFragment.IMAGE,images.get(getAdapterPosition()));
+            bundle.putString(HomeDetailFragment.TITLE,titles.get(getAdapterPosition()));
+            bundle.putString(HomeDetailFragment.DESCRIPTION,descriptions.get(getAdapterPosition()));
             homeDetailFragment.setArguments(bundle);
-            Helper.loadFragment(new HomeDetailFragment(), context, R.id.fragment_container);
+            FragmentHelper.loadFragment(homeDetailFragment, context, R.id.fragment_container);
         }
     }
 }

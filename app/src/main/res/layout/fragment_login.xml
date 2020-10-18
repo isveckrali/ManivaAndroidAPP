@@ -13,7 +13,7 @@
     <ImageView
     android:id="@+id/login_background_iV"
     android:layout_width="match_parent"
-    android:src="@drawable/card_gradient"
+    android:src="@drawable/background"
     android:layout_height="match_parent"
     android:contentDescription="@string/todo" />
 
@@ -79,7 +79,7 @@
                                                     android:gravity="center"
                                                     android:hint="@string/mail"
                                                     android:imeOptions="actionNext"
-                                                    android:inputType="textPersonName" />
+                                                    android:inputType="textEmailAddress" />
                                             </com.google.android.material.textfield.TextInputLayout>
 
                                             <com.google.android.material.textfield.TextInputLayout

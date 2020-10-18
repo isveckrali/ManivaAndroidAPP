@@ -9,5 +9,7 @@ public class Child {
     public static String IMAGES = "images";
     public static String TITLES = "titles";
 
+    public static String USERNAME = "username";
+
 
 }

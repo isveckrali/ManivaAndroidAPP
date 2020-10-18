@@ -24,7 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.manivaandroapp.R;
+import com.example.manivaandroapp.controllers.loginRegister.LoginRegisterActivity;
 import com.example.manivaandroapp.controllers.mainc.MainActivity;
+import com.example.manivaandroapp.controllers.utils.FragmentHelper;
 import com.example.manivaandroapp.controllers.utils.Helper;
 import com.example.manivaandroapp.controllers.utils.InternetController;
 import com.example.manivaandroapp.ui.register.RegisterFragment;
@@ -42,6 +44,7 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
+    //Properties
     private ImageView iVBackground;
     private View view;
     private TextInputEditText  txtIETMail, txtIETPass;
@@ -62,7 +65,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         view =  inflater.inflate(R.layout.fragment_login, container, false);
         context = inflater.getContext();
         init();
-        //backAnimationManagement(iVBackground);
+        ((LoginRegisterActivity)getActivity()).startImageAnimation(iVBackground);
         return view;
     }
 
@@ -79,6 +82,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         txtILMail = view.findViewById(R.id.login_mail_tIL);
         txtILPass = view.findViewById(R.id.login_pass_tIL);
+        progressBar = view.findViewById(R.id.login_pB);
 
         fabLogin.setOnClickListener(this);
         btnRgister.setOnClickListener(this);
@@ -92,39 +96,18 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     //Check wherher user connection is exist
     private void checkInternetAndGetData(){
         if (InternetController.isNetworkConnected(context)){
-            //login();
             checkTextInputsAndGoToLogin();
         } else {
             Toast.makeText(context, R.string.check_internet_connection, Toast.LENGTH_LONG).show();
         }
     }
 
-    //Add background animation to image view
-    private void backAnimationManagement(ImageView imageView){
-        Window window = getActivity().getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        WindowManager wm=window.getWindowManager();
-        Display display = wm.getDefaultDisplay();
 
-        Point point = new Point();
-        display.getSize(point);
-
-        int weight=point.x;
-        int height=point.y;
-
-        //weight- hegiht rate is 1.67
-        imageView.getLayoutParams().width= (int) (height*1.67);
-        imageView.getLayoutParams().height=height;
-
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView,"x",0,-(height*1.67f-weight),0,-(height*1.67f-weight));
-        animator.setDuration(210000);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.start();
-    }
 
     //Check user's fields whether is correct input
     private void checkTextInputsAndGoToLogin(){
         fabLogin.setClickable(false);
+        progressBar.setVisibility(View.VISIBLE);
         String mail = txtIETMail.getText().toString().trim();
         String password = txtIETPass.getText().toString().trim();
         if (Helper.isFilledField(txtIETMail, txtILMail, context) && Helper.isFilledField(txtIETPass, txtILPass, context)) {
@@ -133,10 +116,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             } else {
                 txtILMail.setError(getResources().getText(R.string.not_mail));
                 fabLogin.setClickable(true);
+                progressBar.setVisibility(View.GONE);
             }
             return;
         } else  {
             fabLogin.setClickable(true);
+            progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -147,10 +132,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onSuccess(AuthResult authResult) {
                 fabLogin.setClickable(true);
+                progressBar.setVisibility(View.GONE);
                 startActivity(new Intent(getActivity(),MainActivity.class));
                 getActivity().finish();
                 if (cBRememberMe.isChecked()) {
-                //Save info to DB
+                //Save info to Local DB
                 }
 
             }
@@ -158,6 +144,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onFailure(@NonNull Exception e) {
                 fabLogin.setClickable(true);
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -169,18 +156,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 checkInternetAndGetData();
                 break;
             case R.id.login_register_b:
-                Helper.loadFragment(new RegisterFragment(), context, R.id.log_reg_container_fL);
+                FragmentHelper.loadFragment(new RegisterFragment(), context, R.id.log_reg_container_fL);
                 break;
             case R.id.login_forget_pass_tV:
                 break;
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Helper.removeFragment(new LoginFragment(),context);
     }
 }

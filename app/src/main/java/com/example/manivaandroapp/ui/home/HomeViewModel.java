@@ -15,6 +15,7 @@ public class HomeViewModel extends ViewModel {
     private String title;
     private String sortDescription;
 
+    //Dependency injection
     public HomeViewModel(String imageUrl, String title, String sortDescription) {
         this.imageUrl = imageUrl;
         this.title = title;
@@ -30,10 +31,15 @@ public class HomeViewModel extends ViewModel {
     }
 
     public String getSortDescription() {
-        if (sortDescription.length() < 100) {
+        String[] sortDescArray = sortDescription.split(" ");
+        if (sortDescArray.length < 15) {
             return sortDescription;
         } else {
-            return sortDescription.substring(0, 100) + "   Read More ...";
+            String newDesc = "";
+            for (int i = 0; i < 15; i++) {
+                newDesc = newDesc  +  sortDescArray[i] + " ";
+            }
+            return newDesc + "...   Read More ...";
         }
     }
 }

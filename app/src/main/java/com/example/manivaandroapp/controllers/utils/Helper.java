@@ -13,10 +13,12 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class Helper {
 
+    //Check whether input is mail
     static public boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
+    //check whether input is empty
     static public boolean isFilledField(TextInputEditText editText, TextInputLayout textInputLayout, Context context){
         if (editText.getText().toString().isEmpty()) {
             textInputLayout.setError(context.getResources().getText(R.string.empty_field));
@@ -25,38 +27,4 @@ public class Helper {
             return true;
         }
     }
-
-    static public boolean loadFragment(Fragment fragment, Context context, int fragmentContainer) {
-        //switching fragment
-        // Fragment frag = fManager.findFragmentByTag("uniqueTag");
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment isFragmentExist =  fragmentManager.findFragmentByTag(fragment.getClass().getName());
-
-        if (isFragmentExist == null) {
-            fragmentTransaction.add(fragmentContainer, fragment, fragment.getClass().getName());
-            fragmentTransaction.addToBackStack(fragment.getClass().getName());
-            fragmentTransaction.commit();
-        } else {
-            fragmentTransaction.show(isFragmentExist);
-        }
-        return true;
-    }
-
-    static public boolean removeFragment(Fragment fragment, Context context) {
-        //switching fragment
-        // Fragment frag = fManager.findFragmentByTag("uniqueTag");
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment isFragmentExist =  fragmentManager.findFragmentByTag(fragment.getClass().getName());
-
-        if (isFragmentExist != null) {
-            fragmentTransaction.remove(isFragmentExist);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
-
-        return true;
-    }
-
 }

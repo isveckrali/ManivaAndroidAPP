@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="common_margin">16dp</dimen>
-    <dimen name="item_card_margin">8dp</dimen>
+    <dimen name="fragment_hor_ver_margin">8dp</dimen>
     <dimen name="login_register_card_width">300dp</dimen>
     <!--
     Because the window insets on round devices are larger than 15dp, this padding only applies

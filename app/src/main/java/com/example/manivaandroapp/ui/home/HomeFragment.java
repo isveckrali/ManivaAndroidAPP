@@ -36,7 +36,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-
+    //Define properties
     private HomeViewModel homeViewModel;
     private HomeModel homeModel;
     private ProgressBar progressBar;
@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    //initialize components and bind them
     private void init(){
 
         progressBar = view.findViewById(R.id.home_frag_pB);
@@ -67,6 +68,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+    //Check Reachability  by internet connection
     private void checkConnectAndGetData(){
         if (InternetController.isNetworkConnected(context)) {
             getData();
@@ -75,6 +77,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    //Get data and create own generic
     private void getData(){
         homeModel = new HomeModel();
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -101,6 +104,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    //Set and reaload my recyler view by Data
     private void setData(){
         recyclerView.setAdapter(homeFragAdapter);
         homeFragAdapter.notifyDataSetChanged();

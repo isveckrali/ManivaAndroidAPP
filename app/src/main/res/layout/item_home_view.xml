@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/item_card_margin"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
@@ -10,15 +9,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/card_gradient"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardCornerRadius="8dp"
-        android:elevation="8dp"
+        app:cardCornerRadius="@dimen/fragment_hor_ver_margin"
+        android:elevation="@dimen/fragment_hor_ver_margin"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="@dimen/item_card_margin"
+            android:layout_margin="@dimen/fragment_hor_ver_margin"
             android:gravity="center"
             android:layout_gravity="center_horizontal|bottom">
 
@@ -36,13 +35,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextviewStyle"
-                android:textAlignment="center"
-                android:text="@string/title_about_us"/>
+                android:textAlignment="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textAlignment="textStart"
                 android:id="@+id/item_home_desc_tV"
-                android:text="@string/welcome_page_content"
                 android:layout_height="wrap_content">
             </TextView>
         </LinearLayout>

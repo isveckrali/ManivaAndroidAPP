@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ import com.google.firebase.database.ValueEventListener;
 public class RegisterFragment extends Fragment implements View.OnClickListener{
 
 
+    //Properties
     private ImageView backgrounIV;
     private View view;
     private TextInputEditText txtIETName, txtIETMail, txtIETUsername, txtIETPass;
@@ -56,6 +58,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private Context context;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReference;
+    private CheckBox checkBox;
 
 
     @Override
@@ -65,11 +68,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         view =  inflater.inflate(R.layout.fragment_register, container, false);
         context = inflater.getContext();
         init();
-        backAnimationManagement();
+        startImageAnimation();
         return view;
 
     }
 
+    //Define components and then bind them
     private void init(){
         backgrounIV = view.findViewById(R.id.register_background_iV);
 
@@ -85,6 +89,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
         fabRegister = view.findViewById(R.id.register_fab);
         progressBar = view.findViewById(R.id.register_pB);
+        checkBox = view.findViewById(R.id.register_remember_me_cB);
 
         fabRegister.setOnClickListener(this);
 
@@ -94,9 +99,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    //Check whether internet connection is exist
     private void checkInternetAndGetData(){
         if (InternetController.isNetworkConnected(context)){
-            checkTextInputsAndGoToRgister();
+            checkTextInputsAndGoToRegister();
             progressBar.setVisibility(View.VISIBLE);
         } else {
             Toast.makeText(context, R.string.check_internet_connection, Toast.LENGTH_LONG).show();
@@ -105,17 +111,20 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     //Check user's fields whether is correct input
-    private void checkTextInputsAndGoToRgister(){
+    private void checkTextInputsAndGoToRegister(){
         fabRegister.setClickable(false);
         String mail = txtIETMail.getText().toString().trim();
         String password = txtIETPass.getText().toString().trim();
         String username = txtIETUsername.getText().toString().trim();
         String name = txtIETName.getText().toString().trim();
 
-        if (Helper.isFilledField(txtIETMail, tILMail, context) && Helper.isFilledField(txtIETPass, tILPass, context)) {
+        if (Helper.isFilledField(txtIETName, tILName, context) &&
+                Helper.isFilledField(txtIETMail, tILMail, context) &&
+                Helper.isFilledField(txtIETUsername, tILUsername, context) &&
+                Helper.isFilledField(txtIETPass, tILPass, context)) {
             if (Helper.isEmailValid(mail)){
-               // checkUsername(mail,password,username, name);
-                registerUser(mail,password,username, name);
+                checkUsername(mail,password,username, name);
+               // registerUser(mail,password,username, name);
             } else {
                 txtIETMail.setError(getResources().getText(R.string.not_mail));
                 fabRegister.setClickable(true);
@@ -127,6 +136,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    //check whether username is exist in DB
     private void checkUsername(final String email, final String pass, final String username, final String name){
         Query query = databaseReference.child(Child.USERS).orderByChild("username").equalTo(username);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -143,11 +153,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                progressBar.setClickable(true);
+                fabRegister.setVisibility(View.GONE);
             }
 
         });
     }
 
+    //Create user account and set data to our DB as well
     private void registerUser(final String email, final String pass, final String username, final String name){
         firebaseAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -156,6 +169,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     databaseReference.child(Child.USERS).child(firebaseAuth.getUid()).setValue(new UserInfoModel(email,pass,name,username));
                     fabRegister.setClickable(true);
                     progressBar.setVisibility(View.GONE);
+                    if (checkBox.isChecked()) {
+                        //Save info to Local DB by Shared Preference
+                    }
                     startActivity(new Intent(getActivity(), MainActivity.class));
                     getActivity().finish();
                 } else {
@@ -165,10 +181,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
-
     }
 
-    private void backAnimationManagement(){
+    private void startImageAnimation(){
         Window window = getActivity().getWindow();
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         WindowManager wm=window.getWindowManager();
