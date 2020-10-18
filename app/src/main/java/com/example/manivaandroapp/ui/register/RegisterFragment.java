@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.manivaandroapp.R;
+import com.example.manivaandroapp.controllers.loginRegister.LoginRegisterActivity;
 import com.example.manivaandroapp.controllers.mainc.MainActivity;
 import com.example.manivaandroapp.models.UserInfoModel;
 import com.example.manivaandroapp.controllers.utils.Child;
@@ -46,10 +47,9 @@ import com.google.firebase.database.ValueEventListener;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener{
-
-
+    
     //Properties
-    private ImageView backgrounIV;
+    private ImageView backgroundIV;
     private View view;
     private TextInputEditText txtIETName, txtIETMail, txtIETUsername, txtIETPass;
     private TextInputLayout tILName, tILMail, tILUsername, tILPass;
@@ -68,14 +68,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         view =  inflater.inflate(R.layout.fragment_register, container, false);
         context = inflater.getContext();
         init();
-        startImageAnimation();
+        ((LoginRegisterActivity)getActivity()).startImageAnimation(backgroundIV);
         return view;
 
     }
 
     //Define components and then bind them
     private void init(){
-        backgrounIV = view.findViewById(R.id.register_background_iV);
+        backgroundIV = view.findViewById(R.id.register_background_iV);
 
         txtIETName = view.findViewById(R.id.register_name_tIET);
         txtIETMail = view.findViewById(R.id.register_mail_tIET);
@@ -138,7 +138,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
     //check whether username is exist in DB
     private void checkUsername(final String email, final String pass, final String username, final String name){
-        Query query = databaseReference.child(Child.USERS).orderByChild("username").equalTo(username);
+        Query query = databaseReference.child(Child.USERS).orderByChild(Child.USERNAME).equalTo(username);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -181,28 +181,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 }
             }
         });
-    }
-
-    private void startImageAnimation(){
-        Window window = getActivity().getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        WindowManager wm=window.getWindowManager();
-        Display display = wm.getDefaultDisplay();
-
-        Point point = new Point();
-        display.getSize(point);
-
-        int weight=point.x;
-        int height=point.y;
-
-        //weight- hegiht rate is 1.67
-        backgrounIV.getLayoutParams().width= (int) (height*1.67);
-        backgrounIV.getLayoutParams().height=height;
-
-        ObjectAnimator animator = ObjectAnimator.ofFloat(backgrounIV,"x",0,-(height*1.67f-weight),0,-(height*1.67f-weight));
-        animator.setDuration(210000);
-        animator.setInterpolator(new LinearInterpolator());
-        animator.start();
     }
 
     @Override
