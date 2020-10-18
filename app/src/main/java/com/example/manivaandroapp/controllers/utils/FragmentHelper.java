@@ -12,7 +12,6 @@ public class FragmentHelper {
     //Load fragment by tag and then get back them.
     static public boolean loadFragment(Fragment fragment, Context context, int fragmentContainer) {
         //switching fragment
-        // Fragment frag = fManager.findFragmentByTag("uniqueTag");
         FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment isFragmentExist =  fragmentManager.findFragmentByTag(fragment.getClass().getName());

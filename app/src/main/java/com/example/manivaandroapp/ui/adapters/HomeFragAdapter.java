@@ -36,13 +36,13 @@ public class HomeFragAdapter extends RecyclerView.Adapter<HomeFragAdapter.PostVi
         this.context = context;
     }
 
-    @NonNull
+   @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PostViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(
                         R.layout.item_home_view,
-                        parent,
+                         parent,
                         false
                 )
         );

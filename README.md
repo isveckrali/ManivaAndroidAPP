@@ -13,3 +13,11 @@ App includes login-register and main page. Main page has gotten bottom navigatio
 <h2>Screen Gif</h2>
 
 ![](screen.gif)
+
+</br>
+
+<h2>Explanation Video</h2>
+
+
+[![Alt text](https://i.ytimg.com/vi/9Rwopuah2Q0/hqdefault.jpg)](https://youtu.be/P7OX_UbKGO0)
+

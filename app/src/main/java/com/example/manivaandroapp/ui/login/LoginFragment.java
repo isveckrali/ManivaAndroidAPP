@@ -138,7 +138,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 if (cBRememberMe.isChecked()) {
                 //Save info to Local DB
                 }
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

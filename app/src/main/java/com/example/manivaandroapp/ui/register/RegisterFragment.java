@@ -47,7 +47,7 @@ import com.google.firebase.database.ValueEventListener;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment implements View.OnClickListener{
-    
+
     //Properties
     private ImageView backgroundIV;
     private View view;
