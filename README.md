@@ -7,8 +7,8 @@ App includes login-register and main page. Main page has gotten bottom navigatio
 <h2> Third-party libraries</h2>
 
 <a href = "https://firebase.google.com/">Firebase</a> provides server and dashboard to manage one's own data.</br>
-<a href = "https://firebase.google.com/">Roundedimageview</a> supports rounded corners.</br>
-<a href = "https://firebase.google.com/">Glide</a> provides image loading.</br>
+<a href = "https://github.com/vinc3m1/RoundedImageView">Roundedimageview</a> supports rounded corners.</br>
+<a href = "https://github.com/bumptech/glide">Glide</a> provides image loading.</br>
 
 <h2>Screen Gif</h2>
 
